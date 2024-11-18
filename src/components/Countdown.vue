@@ -163,7 +163,6 @@ export default defineComponent({
     height: 100%;
     object-fit: cover;
   }
-  .mainDiv{}
   .text{
     overflow-wrap: break-word; 
     

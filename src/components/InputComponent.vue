@@ -33,7 +33,6 @@
         border: 1px solid rgb(117, 112, 112);
         padding: 1rem;
         border-radius: 0.5rem;
-        cursor: pointer;
     }
     .inputStyle:focus{
         outline-color: rgb(84, 39, 207);

@@ -22,7 +22,7 @@
     background: dodgerblue;
     color: white;
     border-radius: 6px;
-    height: 50px; margin-top: 5px;
+    height: 50px; 
     cursor: pointer;
   }
 

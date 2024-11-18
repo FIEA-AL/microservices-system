@@ -10,15 +10,16 @@ import { useRouter } from 'vue-router';
         };
     },
     methods: {
-      goToCountdown() {
-        this.router.push('/countdown');
+      goTo(route : string) {
+        this.router.push(route);
         }
     }
     });
 </script>
 <template>
   <div class="card">
-    <button type="button" @click="goToCountdown()">Countdown</button>
+    <button type="button" @click="goTo('/countdown')">Countdown</button>
+    <button type="button" @click="goTo('/qrcode')">QrCode</button>
   </div>
 
   

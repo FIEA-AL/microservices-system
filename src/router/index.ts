@@ -1,6 +1,7 @@
 import {  createRouter, createWebHistory } from 'vue-router'
 import Countdown from '../components/Countdown.vue'
 import Home from '../components/Home.vue'
+import QrCode from '../components/QrCode.vue'
 
 
 const routes = [
@@ -14,6 +15,13 @@ const routes = [
     component: Countdown,
     name: 'Countdown'
   }
+  ,
+  {
+    path: '/qrcode',
+    component: QrCode,
+    name: 'QrCode'
+  },
+  { path: '/qrcodes/:name', component: QrCode },
 ]
 
 export const router = createRouter({
