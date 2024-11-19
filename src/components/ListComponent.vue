@@ -24,6 +24,9 @@
 <style scoped>
 .listElement{
     text-align: left;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
 }
 ul {
   list-style: none;
