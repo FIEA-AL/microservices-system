@@ -3,6 +3,8 @@ import Countdown from '../components/Countdown.vue'
 import Home from '../components/Home.vue'
 import QrCode from '../components/QrCode.vue'
 import { useQRCodeApi } from '../stores/QRCodeApi'
+import Login from '../components/Login.vue'
+import Register from '../components/Register.vue'
 
 
 const routes = [
@@ -22,7 +24,9 @@ const routes = [
     component: QrCode,
     name: 'QrCode'
   },
-  { path: '/qrcode/:name', name: 'QrCodeQuery', component: QrCode },
+  { path: '/qrcode/:index', name: 'QrCodeQuery', component: QrCode },
+  { path: '/login', name : 'Login', component: Login},
+  { path: '/register', name : 'Register', component: Register}
 ]
 
 
@@ -33,12 +37,24 @@ export const router = createRouter({
 
 router.beforeEach(async (to, from , next) => {
 
+  const protectedRoutes = ['QrCode'];
+
+  if (protectedRoutes.includes(to.name as string)) {
+
+    const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+
+    if (!token) {
+      alert('Access denied. Please log in first.');
+      return next({ name: 'Login' }); // Redirect to login if token is missing
+    }
+  }
+
   if (to.name == 'QrCodeQuery') {
     const qrCodeApiInstance = useQRCodeApi();
-    const name = to.params.name as string;
+    const index = Number(to.params.index);
 
     try {
-      const qrCodeUrl = await qrCodeApiInstance.getQRCodeByName(name);
+      const qrCodeUrl = await qrCodeApiInstance.getQRCodeByIndex(index);
 
 
       if (qrCodeUrl) {

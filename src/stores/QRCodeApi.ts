@@ -52,19 +52,16 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
     },
 
     
-    async getQRCodeByName(name: string): Promise<string> {
+    async getQRCodeByIndex(index: number): Promise<string> {
       try {
-        const response = await fetch('http://localhost:3000/qrcodes', {
+        const response = await fetch(`http://localhost:3000/qrcodes/${index}`, {
           method: 'GET',
         });
     
-        const qrcodes = await response.json();
-    
-      
-        for (const element of qrcodes) {
-          if (element.name === name) {
-            return element.url; 
-          }
+        const qrcode = await response.json();
+        
+        if (qrcode){
+          return qrcode.url
         }
     
         console.log('No matching QR code found');

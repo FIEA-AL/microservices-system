@@ -31,7 +31,7 @@ export default defineComponent({
       if (name.value && link.value) {
           await qrCodeApiInstance.saveQRCode(name.value, link.value);
           QRisHidden.value = false; 
-          qrCodeLink.value = window.location.href.concat('/',name.value)
+          qrCodeLink.value = window.location.href.concat('/', String(qrCodeApiInstance.qrcodeNames.length - 1))
           qrName.value = name.value
           name.value = '';
           link.value = '';
@@ -49,7 +49,7 @@ export default defineComponent({
     const showQRCode = (index : number) => {
       editisHidden.value = true;
       QRisHidden.value = false;
-      qrCodeLink.value = window.location.href.concat('/',qrCodeApiInstance.qrcodeNames[index])
+      qrCodeLink.value = window.location.href.concat('/', String(index))
       qrName.value = qrCodeApiInstance.qrcodeNames[index]
     } 
 
@@ -101,46 +101,48 @@ export default defineComponent({
 </script>
 
 <template>
-    <div  style="display: flex;">
-        <div  class="pad" style="width: 70%;">
-            <div style="display: flex;">
-                <InputComponent v-model="name" type="text" class="pad" label="Nome do QRCode"></InputComponent>
-                <InputComponent v-model="link" type="text" class="pad" label="Link do QRCode" style="width: 40%;"></InputComponent>
+    <div   class="flex mobile-qrcode-position">
+        <div  class="pad leftSideWidth" >
+            <div class="flex mobile-input-camps" >
+                <InputComponent v-model="name" type="text" class="pad" label="Nome do QRCode" style="max-width: 380px;"></InputComponent>
+                <InputComponent v-model="link" type="text" class="pad" label="Link do QRCode" style="width: 100%; max-width: 380px;"></InputComponent>
                 <div class="pad" style="display: flex; padding-top: 36px;"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
             </div>
-            <div class="pad" style="display: flex; gap: 30px;">
-                <ListComponent style="white-space: nowrap; overflow: hidden; width: 20%;" title="Nomes" :elements=qrCodeApiInstance.qrcodeNames></ListComponent>
-                <ListComponent style="overflow: hidden; width: 38%;  text-overflow: ellipsis;  white-space: nowrap; " title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
-                <div style="display: flex; flex-direction: column; padding-top: 40px;">
-                  <v-icon style="margin-bottom: 42px;" @click="editQRCode(index)"
-                    v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
-                    name="ri-edit-line"
-                  />
-                </div>
-                <div style="display: flex; flex-direction: column; padding-top: 40px;">
-                  <v-icon style="margin-bottom: 42px;"  @click="deleteQRCode(index)" 
-                    v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
-                    name="fa-regular-trash-alt"
-                  />
-                </div>
-                <div style="display: flex; flex-direction: column; padding-top: 40px;">
-                  <v-icon style="margin-bottom: 42px;" @click="showQRCode(index)"
-                    v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
-                    name="io-open-outline"
-                  />
-                </div>
-            </div>
+            <div class="pad flex mobile-list" style="gap: 30px;">
+                <ListComponent style="white-space: nowrap; overflow: hidden; width: 100%; max-width: 200px;" title="Nomes" :elements=qrCodeApiInstance.qrcodeNames></ListComponent>
+                  <ListComponent style="overflow: hidden; width: 100%; max-width: 350px;  text-overflow: ellipsis;  white-space: nowrap; " title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
+                  <div class="flex" style="padding-top: 40px; gap: 20px;">
+                    <div style="display: flex; flex-direction: column;">
+                      <v-icon style="margin-bottom: 40px;" @click="editQRCode(index)"
+                        v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
+                        name="ri-edit-line"
+                      />
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                      <v-icon style="margin-bottom: 40px;"  @click="deleteQRCode(index)" 
+                        v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
+                        name="fa-regular-trash-alt"
+                      />
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                      <v-icon style="margin-bottom: 40px;" @click="showQRCode(index)"
+                        v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
+                        name="io-open-outline"
+                      />
+                    </div>
+                  </div>
+              </div>
         </div>
         <div style="display: flex; flex-direction: column;" class="pad" v-if="!QRisHidden" >
             <qrcode-vue id="qrCodeCanvas" :value=qrCodeLink :size=300 level="H" render-as="canvas" />
-            <div style="display: flex; justify-content: space-between;" class="pad">
-              <span style="font-size: 1.2rem; padding-top: 20px">{{  qrName }}</span>
+            <div  class="flex space-between pad mobile-qrcode-name">
+              <span style="font-size: 1.2rem; padding-top: 20px; padding-right: 20px;">{{  qrName }}</span>
               <v-icon @click="downloadQRCode()"
                     name="md-filedownload-sharp" style="padding-top: 20px"
                   />
             </div>
         </div>
-        <div v-if="!editisHidden" class="pad" style="display: flex; flex-direction: column; width: 25%;">
+        <div v-if="!editisHidden" class="pad" style="display: flex; flex-direction: column; width: 100%; max-width: 400px;">
           <InputComponent class="pad" v-model="qrCodeLink" type="text"  :label="'Novo link de ' + qrName"></InputComponent>
           <div class="pad" style="text-align: right;"><ButtonComponent @click="handleUpdate()" label="Mudar link" ></ButtonComponent></div>
         </div>
@@ -152,4 +154,45 @@ export default defineComponent({
     .pad{
         padding: 12px;
     }
+    .flex{
+      display: flex;
+    }
+    .space-between{
+      justify-content: space-between;
+    }
+    .leftSideWidth{
+      width: 70%;
+    }
+
+
+  @media (max-width: 1285px) {
+    .mobile-qrcode-position{
+      display: block;
+
+    }
+    .mobile-qrcode-name{
+      justify-content:flex-start;
+    }
+    .mobile-list{
+      display: block;
+    }
+    .mobile-list-icons{
+      display: flex;
+    }
+    .leftSideWidth{
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 782px) {
+    .mobile-input-camps{
+      display: block;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .colorPicker{
+      flex-direction: column;
+    }
+  }
 </style>
