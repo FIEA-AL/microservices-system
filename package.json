@@ -9,14 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.7",
     "axios": "^1.7.7",
-    "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "fs": "^0.0.1-security",
-    "jsonwebtoken": "^9.0.2",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.2.6",
     "qrcode.vue": "^3.6.0",
