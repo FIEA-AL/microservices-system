@@ -1,8 +1,12 @@
 <script lang="ts">
   import { defineComponent} from 'vue';
 import { useRouter } from 'vue-router';
+import ButtonComponent from './ButtonComponent.vue';
 
   export default defineComponent({
+    components : {
+      ButtonComponent
+    },
     setup() {
         const router = useRouter();
         return {
@@ -17,9 +21,9 @@ import { useRouter } from 'vue-router';
     });
 </script>
 <template>
-  <div class="card">
-    <button type="button" @click="goTo('/countdown')">Countdown</button>
-    <button type="button" @click="goTo('/qrcode')">QrCode</button>
+  <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20%;">
+    <ButtonComponent @click="goTo('/countdown')" label="Countdown" ></ButtonComponent>
+    <ButtonComponent @click="goTo('/qrcode')" label="QrCode" ></ButtonComponent>
   </div>
 
   
