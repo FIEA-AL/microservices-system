@@ -13,10 +13,12 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
       };
 
       try {
+        const token = localStorage.getItem('authToken'); 
         const response = await fetch('http://localhost:3000/qrcodes', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(qrCodeData),
         });
@@ -36,8 +38,13 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
 
     async getQRCodes() {
       try {
+        const token = localStorage.getItem('authToken'); 
+
         const response = await fetch('http://localhost:3000/qrcodes', {
           method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
         });
 
         const qrcodes = await response.json();
@@ -75,8 +82,13 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
 
     async deleteQRCodeByIndex(index : number) {
       try {
+        const token = localStorage.getItem('authToken'); 
+
         const response = await fetch(`http://localhost:3000/qrcodes/${index}`, {
           method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
         });
 
         if (response.ok) {
@@ -92,10 +104,13 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
     ,
     async updateQRCodeByIndex(index: number, updatedQRCode: { name: string; url: string }) {
       try {
+        const token = localStorage.getItem('authToken'); 
+
         const response = await fetch(`http://localhost:3000/qrcodes/${index}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(updatedQRCode),
         });
