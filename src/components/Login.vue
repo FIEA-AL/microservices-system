@@ -2,8 +2,8 @@
 import { defineComponent, ref } from 'vue';
 import InputComponent from './InputComponent.vue';
 import ButtonComponent from './ButtonComponent.vue';
-import { useUserApi } from '../stores/UserApi';
 import { useRouter } from 'vue-router';
+import { UserService } from '../service/UserService';
 
 
 
@@ -14,7 +14,6 @@ export default defineComponent({
     ButtonComponent
   },
   setup() {
-    const UserApiInstance = useUserApi();
     const router = useRouter();
 
     const email = ref('')
@@ -22,7 +21,7 @@ export default defineComponent({
 
     const login = async () => {
       if (email.value && password.value) {
-          await UserApiInstance.login(email.value, password.value, router);
+          await UserService.login(email.value, password.value, router);
       } else {
         alert('Please enter a name and a link!');
       }

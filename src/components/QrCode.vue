@@ -5,6 +5,7 @@ import InputComponent from './InputComponent.vue';
 import ButtonComponent from './ButtonComponent.vue';
 import ListComponent from './ListComponent.vue';
 import { useQRCodeApi } from '../stores/QRCodeApi';
+import { QrCodeService } from '../service/QrCodeService';
 
 
 
@@ -29,7 +30,7 @@ export default defineComponent({
     
     const saveQRCode = async () => {
       if (name.value && link.value) {
-          await qrCodeApiInstance.saveQRCode(name.value, link.value);
+          await QrCodeService.saveQRCode(name.value, link.value);
           QRisHidden.value = false; 
           qrCodeLink.value = window.location.href.concat('/', String(qrCodeApiInstance.qrcodeNames.length - 1))
           qrName.value = name.value
@@ -41,7 +42,7 @@ export default defineComponent({
     };
 
     const deleteQRCode = async (index: number) => {
-      await qrCodeApiInstance.deleteQRCodeByIndex(index);
+      await QrCodeService.deleteQRCodeByIndex(index);
       QRisHidden.value = true;
       console.log(`QR Code at index ${index} deleted successfully.`);
     };
@@ -50,19 +51,19 @@ export default defineComponent({
       editisHidden.value = true;
       QRisHidden.value = false;
       qrCodeLink.value = window.location.href.concat('/', String(index))
-      qrName.value = qrCodeApiInstance.qrcodeNames[index]
+      qrName.value = qrCodeApiInstance.qrcodeNames[index][0]
     } 
 
     const editQRCode = (index : number) => {
       QRisHidden.value = true;
       editisHidden.value = false;
       qrCodeLink.value = qrCodeApiInstance.qrcodeUrls[index]
-      qrName.value = qrCodeApiInstance.qrcodeNames[index]
+      qrName.value = qrCodeApiInstance.qrcodeNames[index][0]
       index1.value = index
     } 
 
     const handleUpdate = async () => {
-          await qrCodeApiInstance.updateQRCodeByIndex(index1.value, { name : qrName.value , url: qrCodeLink.value});
+          await QrCodeService.updateQRCodeByIndex(index1.value, { name : qrName.value , url: qrCodeLink.value});
           editisHidden.value = true;
     };
 
@@ -78,7 +79,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      qrCodeApiInstance.getQRCodes();
+      QrCodeService.getQRCodes();
     });
 
     return {
@@ -97,6 +98,11 @@ export default defineComponent({
       downloadQRCode,
     };
   },
+  computed: {
+  firstElements() {
+    return this.qrCodeApiInstance.qrcodeNames.map(([first]) => first);
+  },
+}
 });
 </script>
 
@@ -109,7 +115,7 @@ export default defineComponent({
                 <div class="pad" style="display: flex; padding-top: 36px;"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
             </div>
             <div class="pad flex mobile-list" style="gap: 30px;">
-                <ListComponent style="white-space: nowrap; overflow: hidden; width: 100%; max-width: 200px;" title="Nomes" :elements=qrCodeApiInstance.qrcodeNames></ListComponent>
+                <ListComponent style="white-space: nowrap; overflow: hidden; width: 100%; max-width: 200px;" title="Nomes" :elements=firstElements></ListComponent>
                   <ListComponent style="overflow: hidden; width: 100%; max-width: 350px;  text-overflow: ellipsis;  white-space: nowrap; " title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
                   <div class="flex" style="padding-top: 40px; gap: 20px;">
                     <div style="display: flex; flex-direction: column;">
