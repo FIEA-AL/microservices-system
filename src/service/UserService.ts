@@ -9,11 +9,10 @@ class UserService{
         };
   
         try {
-          const response = await http.post('http://localhost:3000/users', {
+          const response = await http.post('http://localhost:3000/users',user, {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: user,
           });
   
           if (response.status == 200) {
@@ -33,11 +32,10 @@ class UserService{
         };
 
         try {
-            const response = await http.post('http://localhost:3000/auth/login', {
+            const response = await http.post('http://localhost:3000/auth/login', user, {
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                body: user,
+                }
             });
 
             if (response.status == 200) {
@@ -78,6 +76,54 @@ class UserService{
           return '';
         }
     }
+
+    static async deleteUserById(id : string) {
+      try {
+
+        const token = localStorage.getItem('authToken'); 
+
+        const response = await http.delete(`http://localhost:3000/users/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.status == 200) {
+          alert('User deleted');
+        }
+        else{
+          alert('Error deleting user');
+        }
+    
+      } catch (error) {
+        console.error('Error fetching QR codes:', error);
+        alert('Error fetching QR codes.');
+      }
+  }
+
+  static async updateUserById(id: string, updatedUser: { email: string; password: string }) {
+    try {
+      
+      const token = localStorage.getItem('authToken'); 
+
+      const response = await http.put(`http://localhost:3000/users/${id}`, updatedUser,  {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (response.status == 200) {
+        alert('User updated');
+      }
+      else{
+        alert('Error updating user');
+      }
+    } catch (error) {
+      console.error('Error updating QR code:', error);
+      alert('Error updating QR code.');
+    }
+}
 }
 
 

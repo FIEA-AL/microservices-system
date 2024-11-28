@@ -5,7 +5,6 @@ import InputComponent from './InputComponent.vue';
 import ButtonComponent from './ButtonComponent.vue';
 import ListComponent from './ListComponent.vue';
 import { useQRCodeApi } from '../stores/QRCodeApi';
-import { QrCodeService } from '../service/QrCodeService';
 
 
 
@@ -30,7 +29,7 @@ export default defineComponent({
     
     const saveQRCode = async () => {
       if (name.value && link.value) {
-          await QrCodeService.saveQRCode(name.value, link.value);
+          await qrCodeApiInstance.saveQrCode(name.value, link.value);
           QRisHidden.value = false; 
           qrCodeLink.value = window.location.href.concat('/', String(qrCodeApiInstance.qrcodeNames.length - 1))
           qrName.value = name.value
@@ -42,7 +41,7 @@ export default defineComponent({
     };
 
     const deleteQRCode = async (index: number) => {
-      await QrCodeService.deleteQRCodeByIndex(index);
+      await qrCodeApiInstance.deleteFromStates(index);
       QRisHidden.value = true;
       console.log(`QR Code at index ${index} deleted successfully.`);
     };
@@ -63,7 +62,7 @@ export default defineComponent({
     } 
 
     const handleUpdate = async () => {
-          await QrCodeService.updateQRCodeByIndex(index1.value, { name : qrName.value , url: qrCodeLink.value});
+          await qrCodeApiInstance.updateQrCode(index1.value, qrName.value , qrCodeLink.value);
           editisHidden.value = true;
     };
 
@@ -79,7 +78,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      QrCodeService.getQRCodes();
+      qrCodeApiInstance.getQrCodes();
     });
 
     return {
@@ -98,11 +97,6 @@ export default defineComponent({
       downloadQRCode,
     };
   },
-  computed: {
-  firstElements() {
-    return this.qrCodeApiInstance.qrcodeNames.map(([first]) => first);
-  },
-}
 });
 </script>
 
@@ -115,7 +109,7 @@ export default defineComponent({
                 <div class="pad" style="display: flex; padding-top: 36px;"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
             </div>
             <div class="pad flex mobile-list" style="gap: 30px;">
-                <ListComponent style="white-space: nowrap; overflow: hidden; width: 100%; max-width: 200px;" title="Nomes" :elements=firstElements></ListComponent>
+                <ListComponent style="white-space: nowrap; overflow: hidden; width: 100%; max-width: 200px;" title="Nomes" :elements=qrCodeApiInstance.filterOutIds></ListComponent>
                   <ListComponent style="overflow: hidden; width: 100%; max-width: 350px;  text-overflow: ellipsis;  white-space: nowrap; " title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
                   <div class="flex" style="padding-top: 40px; gap: 20px;">
                     <div style="display: flex; flex-direction: column;">

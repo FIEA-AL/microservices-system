@@ -2,9 +2,9 @@ import {  createRouter, createWebHistory } from 'vue-router'
 import Countdown from '../components/Countdown.vue'
 import Home from '../components/Home.vue'
 import QrCode from '../components/QrCode.vue'
-import { useQRCodeApi } from '../stores/QRCodeApi'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
+import { useQRCodeApi } from '../stores/QRCodeApi'
 
 
 const routes = [
@@ -50,11 +50,12 @@ router.beforeEach(async (to, from , next) => {
   }
 
   if (to.name == 'QrCodeQuery') {
-    const qrCodeApiInstance = useQRCodeApi();
     const index = Number(to.params.index);
 
     try {
-      const qrCodeUrl = await qrCodeApiInstance.getQRCodeByIndex(index);
+      const qrCodeApiInstance = useQRCodeApi();
+      await qrCodeApiInstance.getQrCodes();
+      const qrCodeUrl = qrCodeApiInstance.qrcodeUrls[index]
 
 
       if (qrCodeUrl) {
