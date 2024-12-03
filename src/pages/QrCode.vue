@@ -19,7 +19,7 @@ import InputComponent from '../components/InputComponent.vue';
     const qrCodeLink = ref('')
     const qrName = ref('')
 
-    const index1 = ref(0)
+    const indexToEdit = ref(0)
     
     const saveQRCode = async () => {
       if (name.value && link.value) {
@@ -54,11 +54,11 @@ import InputComponent from '../components/InputComponent.vue';
       editisHidden.value = false;
       qrCodeLink.value = qrCodeApiInstance.qrcodeUrls[index]
       qrName.value = qrCodeApiInstance.qrcodeNames[index][0]
-      index1.value = index
+      indexToEdit.value = index
     } 
 
     const handleUpdate = async () => {
-          await qrCodeApiInstance.updateQrCode(index1.value, qrName.value , qrCodeLink.value);
+          await qrCodeApiInstance.updateQrCode(indexToEdit.value, qrName.value , qrCodeLink.value);
           editisHidden.value = true;
     };
 
@@ -68,7 +68,7 @@ import InputComponent from '../components/InputComponent.vue';
       if (canvas) {
         const link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
-        link.download = `${qrName.value}.png`; 
+        link.download = `${qrName.value}.png`;
         link.click();
       }
     };
