@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import QrcodeVue from 'qrcode.vue'
 import { useQRCodeApi } from '../stores/QRCodeApi';
 import ListComponent from '../components/ListComponent.vue';
@@ -12,6 +12,10 @@ import InputComponent from '../components/InputComponent.vue';
     const QRisHidden = ref(true);
     const editisHidden = ref(true); 
 
+
+    const qrCodeNamesList = computed(() => qrCodeApiInstance.filterOutIds);
+    const qrCodeUrlList = qrCodeApiInstance.qrcodeUrls
+
     const qrCodeLink = ref('')
     const qrName = ref('')
 
@@ -19,12 +23,14 @@ import InputComponent from '../components/InputComponent.vue';
     
     const saveQRCode = async () => {
       if (name.value && link.value) {
-          await qrCodeApiInstance.saveQrCode(name.value, link.value);
-          QRisHidden.value = false; 
-          qrCodeLink.value = window.location.href.concat('/', String(qrCodeApiInstance.qrcodeNames.length - 1))
-          qrName.value = name.value
-          name.value = '';
-          link.value = '';
+          const qrcode = await qrCodeApiInstance.saveQrCode(name.value, link.value);
+          if(qrcode){
+            QRisHidden.value = false; 
+            qrCodeLink.value = window.location.href.concat('/', qrcode.id)
+            qrName.value = qrcode.name
+            name.value = '';
+            link.value = '';
+          }
       } else {
         alert('Please enter a name and a link!');
       }
@@ -39,7 +45,7 @@ import InputComponent from '../components/InputComponent.vue';
     const showQRCode = (index : number) => {
       editisHidden.value = true;
       QRisHidden.value = false;
-      qrCodeLink.value = window.location.href.concat('/', String(index))
+      qrCodeLink.value = window.location.href.concat('/', qrCodeApiInstance.qrcodeNames[index][1])
       qrName.value = qrCodeApiInstance.qrcodeNames[index][0]
     } 
 
@@ -82,8 +88,8 @@ import InputComponent from '../components/InputComponent.vue';
                 <div class="pad12 flex padtop36"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
             </div>
             <div class="pad12 flex mobile-list" style="gap: 30px;">
-                  <ListComponent class="namesList maxWidth"title="Nomes" :elements=qrCodeApiInstance.filterOutIds></ListComponent>
-                  <ListComponent class="urlList maxWidth" title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
+                  <ListComponent class="namesList maxWidth"title="Nomes" :elements=qrCodeNamesList></ListComponent>
+                  <ListComponent class="urlList maxWidth" title="URLs" :elements=qrCodeUrlList></ListComponent>
                   <div class="flex buttonsList">
                     <div class="flex directionColumn">
                       <v-icon class="marginBottom40"  @click="editQRCode(index)"

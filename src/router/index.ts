@@ -5,6 +5,8 @@ import QrCode from '../pages/QrCode.vue'
 import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
 import { useQRCodeApi } from '../stores/QRCodeApi'
+import { QrCodeService } from '../service/QrCodeService'
+import Empty from '../pages/Empty.vue'
 
 
 const routes = [
@@ -24,7 +26,8 @@ const routes = [
     component: QrCode,
     name: 'QrCode'
   },
-  { path: '/qrcode/:index', name: 'QrCodeQuery', component: QrCode },
+  { path: '/empty', name: 'Empty', component: Empty },
+  { path: '/qrcode/:id', name: 'QrCodeQuery', component: Empty },
   { path: '/login', name : 'Login', component: Login},
   { path: '/register', name : 'Register', component: Register}
 ]
@@ -50,15 +53,13 @@ router.beforeEach(async (to, from , next) => {
   }
 
   if (to.name == 'QrCodeQuery') {
-    const index = Number(to.params.index);
+    const id = to.params.id;
 
     try {
-      const qrCodeApiInstance = useQRCodeApi();
-      await qrCodeApiInstance.getQrCodes();
-      const qrCodeUrl = qrCodeApiInstance.qrcodeUrls[index]
-
-
-      if (qrCodeUrl) {
+      
+      const qrCode = await QrCodeService.getQRCodeById(id as string);
+      if (qrCode) {
+        const qrCodeUrl = qrCode.url
         if (!qrCodeUrl.startsWith('http://')) {
           window.location.replace(`http://${qrCodeUrl}`);
         } else {
@@ -66,12 +67,12 @@ router.beforeEach(async (to, from , next) => {
         }
       } else {
         alert('QR Code not found!');
-        next({ path: '/qrcode' });
+        next({ path: '/empty' });
       }
     } catch (error) {
       console.error('Error fetching QR code:', error);
       alert('Error fetching QR code.');
-      next({ path: '/qrcode' });
+      next({ path: '/empty' });
     }
   }else {
     next(); 

@@ -2,7 +2,7 @@ import http from "./config";
 import { useQRCodeApi } from '../stores/QRCodeApi';
 
 class QrCodeService {
-    static async saveQRCode(name: string, url: string) : Promise<{} | undefined> {
+    static async saveQRCode(name: string, url: string) : Promise<[{name: string, url: string, id: string}] | undefined> {
         const qrCodeData = {
             name: name,
             url: url,
@@ -42,6 +42,20 @@ class QrCodeService {
             return 
         }
     }
+
+    static async getQRCodeById(id : string) :  Promise<{name: string, url: string} | undefined>{
+      try {
+  
+          const response = await http.get(`http://localhost:3000/qrcodes/${id}`, {
+          });
+  
+          return response.data
+      } catch (error) {
+          console.error('Error fetching QR codes:', error);
+          alert('Error fetching QR codes.');
+          return 
+      }
+  }
 
     static async deleteQRCodeByIndex(index : number): Promise<boolean> {
         try {

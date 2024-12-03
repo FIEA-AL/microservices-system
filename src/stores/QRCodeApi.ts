@@ -16,9 +16,10 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
       const data = await QrCodeService.getQRCodes()
       this.fillStates(data);
     },
-    async saveQrCode (name: string, url: string) {
+    async saveQrCode (name: string, url: string): Promise<{name: string, url: string, id: string} | undefined> {
       const data = await QrCodeService.saveQRCode(name, url)
       this.fillStates(data);
+      return data![0];
     },
     fillStates(data: any) {
       data.forEach((element : any) => {
