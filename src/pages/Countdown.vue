@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import InputComponent from './InputComponent.vue';
-import ListComponent from './ListComponent.vue';
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from '../components/ButtonComponent.vue';
+import ListComponent from '../components/ListComponent.vue';
+import InputComponent from '../components/InputComponent.vue';
 
 
 export default defineComponent({

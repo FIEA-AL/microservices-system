@@ -1,7 +1,7 @@
 <script lang="ts">
   import { defineComponent} from 'vue';
 import { useRouter } from 'vue-router';
-import ButtonComponent from './ButtonComponent.vue';
+import ButtonComponent from '../components/ButtonComponent.vue';
 
   export default defineComponent({
     components : {

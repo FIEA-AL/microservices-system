@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import QrcodeVue from 'qrcode.vue'
-import InputComponent from './InputComponent.vue';
-import ButtonComponent from './ButtonComponent.vue';
-import ListComponent from './ListComponent.vue';
 import { useQRCodeApi } from '../stores/QRCodeApi';
+import ListComponent from '../components/ListComponent.vue';
+import ButtonComponent from '../components/ButtonComponent.vue';
+import InputComponent from '../components/InputComponent.vue';
 
 
 

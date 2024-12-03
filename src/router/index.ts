@@ -1,9 +1,9 @@
 import {  createRouter, createWebHistory } from 'vue-router'
-import Countdown from '../components/Countdown.vue'
-import Home from '../components/Home.vue'
-import QrCode from '../components/QrCode.vue'
-import Login from '../components/Login.vue'
-import Register from '../components/Register.vue'
+import Countdown from '../pages/Countdown.vue'
+import Home from '../pages/Home.vue'
+import QrCode from '../pages/QrCode.vue'
+import Login from '../pages/Login.vue'
+import Register from '../pages/Register.vue'
 import { useQRCodeApi } from '../stores/QRCodeApi'
 
 
