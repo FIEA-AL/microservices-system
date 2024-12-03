@@ -37,17 +37,28 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="pad" style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-      <div style="width: 100%; max-width: 400px;">
-        <InputComponent class="pad" v-model="email" type="text" label="Usuario"></InputComponent>
-        <InputComponent class="pad" v-model="password" type="text" label="Senha"></InputComponent>
+  <div class="pad12 flex loginMenu" style="gap: 20px; ">
+      <div class="inputsWidth">
+        <InputComponent class="pad12" v-model="email" type="text" label="Usuario"></InputComponent>
+        <InputComponent class="pad12" v-model="password" type="text" label="Senha"></InputComponent>
       </div>
-        <div class="pad"><ButtonComponent @click = register() label="Register"></ButtonComponent></div>
+        <div class="pad12"><ButtonComponent @click = register() label="Register"></ButtonComponent></div>
   </div>
 </template>
 
 <style scoped>
- .pad{
-  padding: 12px;
- }
+  .flex{
+    display: flex;
+  }
+  .inputsWidth{
+    width: 100%; 
+    max-width: 400px;
+  }
+  .loginMenu{
+    flex-direction: column;
+    align-items: center;
+  }
+  .pad12{
+    padding: 12px;
+  }
 </style>

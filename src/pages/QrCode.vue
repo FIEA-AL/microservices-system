@@ -102,30 +102,30 @@ export default defineComponent({
 
 <template>
     <div   class="flex mobile-qrcode-position">
-        <div  class="pad leftSideWidth" >
+        <div  class="pad12 leftSideWidth" >
             <div class="flex mobile-input-camps" >
-                <InputComponent v-model="name" type="text" class="pad" label="Nome do QRCode" style="max-width: 380px;"></InputComponent>
-                <InputComponent v-model="link" type="text" class="pad" label="Link do QRCode" style="width: 100%; max-width: 380px;"></InputComponent>
-                <div class="pad" style="display: flex; padding-top: 36px;"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
+                <InputComponent v-model="name" type="text" class="pad12 max-width380 maxWidth" label="Nome do QRCode"></InputComponent>
+                <InputComponent v-model="link" type="text" class="pad12 max-width380 maxWidth" label="Link do QRCode"></InputComponent>
+                <div class="pad12 flex padtop36"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
             </div>
-            <div class="pad flex mobile-list" style="gap: 30px;">
-                <ListComponent style="white-space: nowrap; overflow: hidden; width: 100%; max-width: 200px;" title="Nomes" :elements=qrCodeApiInstance.filterOutIds></ListComponent>
-                  <ListComponent style="overflow: hidden; width: 100%; max-width: 350px;  text-overflow: ellipsis;  white-space: nowrap; " title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
-                  <div class="flex" style="padding-top: 40px; gap: 20px;">
-                    <div style="display: flex; flex-direction: column;">
-                      <v-icon style="margin-bottom: 40px;" @click="editQRCode(index)"
+            <div class="pad12 flex mobile-list" style="gap: 30px;">
+                  <ListComponent class="namesList maxWidth"title="Nomes" :elements=qrCodeApiInstance.filterOutIds></ListComponent>
+                  <ListComponent class="urlList maxWidth" title="URLs" :elements=qrCodeApiInstance.qrcodeUrls></ListComponent>
+                  <div class="flex buttonsList">
+                    <div class="flex directionColumn">
+                      <v-icon class="marginBottom40"  @click="editQRCode(index)"
                         v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
                         name="ri-edit-line"
                       />
                     </div>
-                    <div style="display: flex; flex-direction: column;">
-                      <v-icon style="margin-bottom: 40px;"  @click="deleteQRCode(index)" 
+                    <div class="flex directionColumn">
+                      <v-icon class="marginBottom40" @click="deleteQRCode(index)" 
                         v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
                         name="fa-regular-trash-alt"
                       />
                     </div>
-                    <div style="display: flex; flex-direction: column;">
-                      <v-icon style="margin-bottom: 40px;" @click="showQRCode(index)"
+                    <div class="flex directionColumn">
+                      <v-icon class="marginBottom40" @click="showQRCode(index)"
                         v-for="(url, index) in qrCodeApiInstance.qrcodeUrls"
                         name="io-open-outline"
                       />
@@ -133,25 +133,25 @@ export default defineComponent({
                   </div>
               </div>
         </div>
-        <div style="display: flex; flex-direction: column;" class="pad" v-if="!QRisHidden" >
+        <div class="pad12 flex directionColumn" v-if="!QRisHidden" >
             <qrcode-vue id="qrCodeCanvas" :value=qrCodeLink :size=300 level="H" render-as="canvas" />
-            <div  class="flex space-between pad mobile-qrcode-name">
-              <span style="font-size: 1.2rem; padding-top: 20px; padding-right: 20px;">{{  qrName }}</span>
+            <div  class="flex space-between pad12 mobile-qrcode-name">
+              <span class="qrName">{{ qrName }}</span>
               <v-icon @click="downloadQRCode()"
-                    name="md-filedownload-sharp" style="padding-top: 20px"
+                    name="md-filedownload-sharp" class="padtop20"
                   />
             </div>
         </div>
-        <div v-if="!editisHidden" class="pad" style="display: flex; flex-direction: column; width: 100%; max-width: 400px;">
-          <InputComponent class="pad" v-model="qrCodeLink" type="text"  :label="'Novo link de ' + qrName"></InputComponent>
-          <div class="pad" style="text-align: right;"><ButtonComponent @click="handleUpdate()" label="Mudar link" ></ButtonComponent></div>
+        <div v-if="!editisHidden" class="pad12 flex directionColumn maxWidth max-width400" >
+          <InputComponent class="pad12" v-model="qrCodeLink" type="text"  :label="'Novo link de ' + qrName"></InputComponent>
+          <div class="pad12" style="text-align: right;"><ButtonComponent @click="handleUpdate()" label="Mudar link" ></ButtonComponent></div>
         </div>
     </div>
 
 </template>
 
 <style scoped>
-    .pad{
+    .pad12{
         padding: 12px;
     }
     .flex{
@@ -163,7 +163,47 @@ export default defineComponent({
     .leftSideWidth{
       width: 70%;
     }
-
+    .maxWidth{
+      width: 100%;
+    }
+    .max-width380{
+      max-width: 380px;
+    }
+    .max-width400{
+      max-width: 400px;
+    }
+    .namesList{
+      white-space: nowrap; 
+      overflow: hidden; 
+      max-width: 200px;
+    }
+    .urlList{
+      overflow: hidden; 
+      max-width: 350px;  
+      text-overflow: ellipsis;  
+      white-space: nowrap;
+    }
+    .buttonsList{
+      padding-top: 40px; 
+      gap: 20px;
+    }
+    .directionColumn{
+      flex-direction: column;
+    }
+    .qrName{
+      font-size: 1.2rem; 
+      padding-top: 20px; 
+      padding-right: 20px;
+    }
+    .marginBottom40{
+      margin-bottom: 40px;
+    }
+    .padtop36{
+      padding-top: 36px;
+    }
+    .padtop20{
+      padding-top: 20px;
+    }
 
   @media (max-width: 1285px) {
     .mobile-qrcode-position{

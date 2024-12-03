@@ -21,7 +21,7 @@ import ButtonComponent from '../components/ButtonComponent.vue';
     });
 </script>
 <template>
-  <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20%;">
+  <div class="homeMenu">
     <ButtonComponent @click="goTo('/countdown')" label="Countdown" ></ButtonComponent>
     <ButtonComponent @click="goTo('/qrcode')" label="QrCode" ></ButtonComponent>
   </div>
@@ -30,4 +30,10 @@ import ButtonComponent from '../components/ButtonComponent.vue';
 </template>
 
 <style scoped>
+  .homeMenu{
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; 
+    margin-top: 20%;
+  }
 </style>

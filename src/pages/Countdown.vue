@@ -101,27 +101,27 @@ export default defineComponent({
 <template>
   <div class="mainDiv flex"  >
     <div class="leftSide">
-      <h1 class="pad" style="color: rgb(90 77 77);">Gerador de link de contador</h1>
+      <h1 class="pad12 h1color">Gerador de link de contador</h1>
 
       <section>
-        <InputComponent v-model="date" type="datetime-local" label="Data limite" class="pad" style="width: 100%"></InputComponent>
+        <InputComponent v-model="date" type="datetime-local" label="Data limite" class="pad12 fullWidth"></InputComponent>
   
         <div class="flex" style="gap: 50px;">
-          <div class="flex colorPicker"  style="width: 100%;">
-            <InputComponent v-model="color" type="color" label="Cor do texto" width="100%" class="pad"></InputComponent>
-            <div style="display: flex; align-items: center;"><span>{{ color }}</span></div>
+          <div class="flex colorPicker fullWidth" >
+            <InputComponent v-model="color" type="color" label="Cor do texto" width="100%" class="pad12"></InputComponent>
+            <div class="flex centerAlign"><span>{{ color }}</span></div>
           </div>
-          <div class="flex colorPicker"  style="width: 100%;">
-            <InputComponent v-model="backgroundColor" type="color" label="Cor do fundo" width="100%" class="pad"></InputComponent>
-            <div style="display: flex; align-items: center;"><span>{{ backgroundColor }}</span></div>
+          <div class="flex colorPicker fullWidth" >
+            <InputComponent v-model="backgroundColor" type="color" label="Cor do fundo" width="100%" class="pad12"></InputComponent>
+            <div class="flex centerAlign"><span>{{ backgroundColor }}</span></div>
           </div>
         </div>
       </section>
 
       <hr>
 
-      <h3 class="pad">Exemplo</h3>
-      <div class="pad">
+      <h3 class="pad12">Exemplo</h3>
+      <div class="pad12">
         <div v-if="!loading">
           <img 
             :src="finalCountdownLink" 
@@ -132,21 +132,21 @@ export default defineComponent({
       </div>
 
 
-      <div style="display: flex; gap: 20px;" class="pad urlAndButtonDiv">
-        <div style="width: 100%">
+      <div  style="gap: 20px;" class="flex pad12 urlAndButtonDiv">
+        <div class="fullWidth">          
           <InputComponent  type="text" :modelValue=finalCountdownLink></InputComponent>
         </div>
         <ButtonComponent @click="copyURL" label="Copiar HTML" ></ButtonComponent>
       </div>
     </div>
-    <div  class=" pad rightSide" >
+    <div  class=" pad12 rightSide" >
       <div class="eyeImg">
         <img  class="eyeImgimg"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf6zoRR_FPG7f2knECoYTgOuETejMYPg71vg&s" 
             >
       </div>
-      <h2 class="pad" style="text-align: left; padding-bottom: 0;">Como utilizar</h2>
-      <div class="pad">
+      <h2 class="pad12 h2adjust">Como utilizar</h2>
+      <div class="pad12">
         <ListComponent class="text" :elements=stepGuide></ListComponent>
       </div>
     </div>
@@ -187,8 +187,21 @@ export default defineComponent({
   .countdownImage{
     width: 100%;
   }
-  .pad{
+  .pad12{
     padding: 12px;
+  }
+  .h1color{
+    color: rgb(90 77 77);
+  }
+  .fullWidth{
+    width: 100%;
+  }
+  .centerAlign{
+    align-items: center;
+  }
+  .h2adjust{
+    text-align: left; 
+    padding-bottom: 0;
   }
  
   @media (max-width: 1568px) {
