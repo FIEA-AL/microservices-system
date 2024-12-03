@@ -1,3 +1,4 @@
+import { UserWithPassword } from "../types/Types";
 import http from "./config";
 
 
@@ -55,7 +56,7 @@ class UserService{
         }
     }
 
-    static async getUserById(id: string): Promise<{} | undefined> {
+    static async getUserById(id: string): Promise<UserWithPassword | undefined> {
         try {
 
           const response = await http.get(`http://localhost:3000/users/${id}`, {
@@ -73,7 +74,7 @@ class UserService{
         } catch (error) {
           console.error('Error fetching QR codes:', error);
           alert('Error fetching QR codes.');
-          return '';
+          return
         }
     }
 

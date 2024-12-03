@@ -1,8 +1,9 @@
 import http from "./config";
 import { useQRCodeApi } from '../stores/QRCodeApi';
+import { QrCode } from "../types/Types";
 
 class QrCodeService {
-    static async saveQRCode(name: string, url: string) : Promise<[{name: string, url: string, id: string}] | undefined> {
+    static async saveQRCode(name: string, url: string) : Promise<[QrCode] | undefined> {
         const qrCodeData = {
             name: name,
             url: url,
@@ -25,7 +26,7 @@ class QrCodeService {
         }
     }
 
-    static async getQRCodes() :  Promise<{} | undefined>{
+    static async getQRCodes() :  Promise<QrCode[] | undefined>{
         try {
             const token = localStorage.getItem('authToken'); 
     
@@ -43,7 +44,7 @@ class QrCodeService {
         }
     }
 
-    static async getQRCodeById(id : string) :  Promise<{name: string, url: string} | undefined>{
+    static async getQRCodeById(id : string) :  Promise<QrCode | undefined>{
       try {
   
           const response = await http.get(`http://localhost:3000/qrcodes/${id}`, {

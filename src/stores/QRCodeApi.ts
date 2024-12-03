@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { QrCodeService } from '../service/QrCodeService';
+import { QrCode } from '../types/Types';
 
 export const useQRCodeApi = defineStore('QRCodeApi', {
   state: () => ({
@@ -16,7 +17,7 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
       const data = await QrCodeService.getQRCodes()
       this.fillStates(data);
     },
-    async saveQrCode (name: string, url: string): Promise<{name: string, url: string, id: string} | undefined> {
+    async saveQrCode (name: string, url: string): Promise<QrCode | undefined> {
       const data = await QrCodeService.saveQRCode(name, url)
       this.fillStates(data);
       return data![0];
