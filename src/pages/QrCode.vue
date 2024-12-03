@@ -80,11 +80,11 @@ import InputComponent from '../components/InputComponent.vue';
 </script>
 
 <template>
-    <div   class="flex mobile-qrcode-position">
+    <div   class="flex mobile-qrcode-position space-between">
         <div  class="pad12 leftSideWidth" >
             <div class="flex mobile-input-camps" >
-                <InputComponent v-model="name" type="text" class="pad12 max-width380 maxWidth" label="Nome do QRCode"></InputComponent>
-                <InputComponent v-model="link" type="text" class="pad12 max-width380 maxWidth" label="Link do QRCode"></InputComponent>
+                <InputComponent v-model="name" type="text" class="pad12 max-width300 maxWidth" label="Nome do QRCode"></InputComponent>
+                <InputComponent v-model="link" type="text" class="pad12 maxWidth" label="Link do QRCode"></InputComponent>
                 <div class="pad12 flex padtop36"><ButtonComponent @click="saveQRCode()" label="Salvar QRCode" ></ButtonComponent></div>
             </div>
             <div class="pad12 flex mobile-list" style="gap: 30px;">
@@ -112,7 +112,7 @@ import InputComponent from '../components/InputComponent.vue';
                   </div>
               </div>
         </div>
-        <div class="pad12 flex directionColumn" v-if="!QRisHidden" >
+        <div class="pad24 flex directionColumn" v-if="!QRisHidden" >
             <qrcode-vue id="qrCodeCanvas" :value=qrCodeLink :size=300 level="H" render-as="canvas" />
             <div  class="flex space-between pad12 mobile-qrcode-name">
               <span class="qrName">{{ qrName }}</span>
@@ -133,6 +133,9 @@ import InputComponent from '../components/InputComponent.vue';
     .pad12{
         padding: 12px;
     }
+    .pad24{
+        padding: 24px;
+    }
     .flex{
       display: flex;
     }
@@ -145,8 +148,8 @@ import InputComponent from '../components/InputComponent.vue';
     .maxWidth{
       width: 100%;
     }
-    .max-width380{
-      max-width: 380px;
+    .max-width300{
+      max-width: 300px;
     }
     .max-width400{
       max-width: 400px;
@@ -192,12 +195,6 @@ import InputComponent from '../components/InputComponent.vue';
     .mobile-qrcode-name{
       justify-content:flex-start;
     }
-    .mobile-list{
-      display: block;
-    }
-    .mobile-list-icons{
-      display: flex;
-    }
     .leftSideWidth{
       width: 100%;
     }
@@ -207,6 +204,13 @@ import InputComponent from '../components/InputComponent.vue';
     .mobile-input-camps{
       display: block;
     }
+    .mobile-list{
+      display: block;
+    }
+    .mobile-list-icons{
+      display: flex;
+    }
+
   }
 
   @media (max-width: 640px) {
