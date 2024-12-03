@@ -1,39 +1,22 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { UserService } from '../service/UserService';
-import ButtonComponent from '../components/ButtonComponent.vue';
-import InputComponent from '../components/InputComponent.vue';
+<script lang="ts" setup>
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { UserService } from '../service/UserService';
+  import ButtonComponent from '../components/ButtonComponent.vue';
+  import InputComponent from '../components/InputComponent.vue';
 
+  const router = useRouter();
 
+  const email = ref('');
+  const password = ref('');
 
-
-export default defineComponent({
-  components: {
-    InputComponent,
-    ButtonComponent
-  },
-  setup() {
-    const router = useRouter()
-
-    const email = ref('')
-    const password  = ref('')
-
-    const register = async () => {
-      if (email.value && password.value) {
-          await UserService.saveUser(email.value, password.value, router);
-      } else {
-        alert('Please enter a name and a link!');
-      }
-    };
-
-    return {
-        register,
-        email,
-        password
+  const register = async () => {
+    if (email.value && password.value) {
+      await UserService.saveUser(email.value, password.value, router);
+    } else {
+      alert('Please enter a name and a link!');
     }
-  }
-});
+  };
 </script>
 
 <template>

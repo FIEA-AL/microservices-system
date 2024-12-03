@@ -21,8 +21,6 @@ export default defineComponent({
       stepGuide: ['1 Passo: blaaaaaaaaaa', '1 Passo: blaaaaaaaaaa', '1 Passo: blaaaaaaaaaa', '1 Passo: blaaaaaaaaaa', ]
     };
   },
-  computed: {
-  },
   methods: {
     async copyURL() {
       try {

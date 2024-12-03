@@ -1,21 +1,11 @@
-<script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import QrcodeVue from 'qrcode.vue'
 import { useQRCodeApi } from '../stores/QRCodeApi';
 import ListComponent from '../components/ListComponent.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
 import InputComponent from '../components/InputComponent.vue';
 
-
-
-export default defineComponent({
-  components: {
-    InputComponent,
-    QrcodeVue,
-    ButtonComponent,
-    ListComponent,
-  },
-  setup() {
     const qrCodeApiInstance = useQRCodeApi();
     const name = ref('');
     const link = ref('');
@@ -80,24 +70,7 @@ export default defineComponent({
     onMounted(() => {
       qrCodeApiInstance.getQrCodes();
     });
-
-    return {
-      qrCodeApiInstance,
-      name,
-      link,
-      QRisHidden,
-      saveQRCode,
-      qrCodeLink,
-      qrName,
-      deleteQRCode,
-      showQRCode,
-      editQRCode,
-      editisHidden,
-      handleUpdate,
-      downloadQRCode,
-    };
-  },
-});
+    
 </script>
 
 <template>
