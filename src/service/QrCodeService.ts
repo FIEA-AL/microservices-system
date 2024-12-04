@@ -3,7 +3,7 @@ import { useQRCodeApi } from '../stores/QRCodeApi';
 import { QrCode } from "../types/Types";
 
 class QrCodeService {
-    static async saveQRCode(name: string, url: string) : Promise<[QrCode] | undefined> {
+    static async saveQRCode(name: string, url: string) : Promise<QrCode | undefined> {
         const qrCodeData = {
             name: name,
             url: url,
@@ -18,7 +18,7 @@ class QrCodeService {
         });
 
             alert('QR code saved!');
-            return [response.data]
+            return response.data
         } catch (error) {
             console.error('Error saving QR code:', error);
             alert('Error saving QR code.');

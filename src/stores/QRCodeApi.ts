@@ -15,18 +15,30 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
   actions: {
     async getQrCodes () {
       const data = await QrCodeService.getQRCodes()
-      this.fillStates(data);
+      if (data){
+        this.fillStates(data);
+        return data;
+      }
+      return
     },
     async saveQrCode (name: string, url: string): Promise<QrCode | undefined> {
       const data = await QrCodeService.saveQRCode(name, url)
-      this.fillStates(data);
-      return data![0];
+      if (data){
+        this.fillStates(data);
+        return data;
+      }
+      return
     },
-    fillStates(data: any) {
-      data.forEach((element : any) => {
-        this.qrcodeNames.push([element.name, element.id]);
-        this.qrcodeUrls.push(element.url);
-      })
+    fillStates(data: QrCode[] | QrCode) {
+      if (Array.isArray(data)) {
+        data.forEach((element: QrCode) => {
+          this.qrcodeNames.push([element.name, element.id]);
+          if (element.url) this.qrcodeUrls.push(element.url);
+        });
+      } else {
+        this.qrcodeNames.push([data.name, data.id]);
+        if (data.url) this.qrcodeUrls.push(data.url);
+      }
     },
     async deleteFromStates(index : number) {
       const deleted = await QrCodeService.deleteQRCodeByIndex(index);
