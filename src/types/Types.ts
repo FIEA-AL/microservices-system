@@ -8,8 +8,8 @@ export interface UserWithPassword extends User{
     password: string
 }
 
-export interface QrCode{
-    id : string,
-    name : string,
-    url: string | null
+export interface QrCode {
+  id: string;
+  name: string;
+  url: string;
 }

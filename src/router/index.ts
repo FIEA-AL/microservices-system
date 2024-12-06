@@ -60,8 +60,8 @@ router.beforeEach(async (to, from , next) => {
       const qrCode = await QrCodeService.getQRCodeById(id as string);
       if (qrCode) {
         const qrCodeUrl = qrCode.url
-        if (!qrCodeUrl.startsWith('http://')) {
-          window.location.replace(`http://${qrCodeUrl}`);
+        if (!qrCodeUrl.startsWith("https://")) {
+          window.location.replace(`https://${qrCodeUrl}`);
         } else {
           window.location.replace(qrCodeUrl);
         }
