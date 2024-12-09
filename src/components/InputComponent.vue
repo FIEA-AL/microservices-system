@@ -6,7 +6,8 @@
         type: String,
         label: String,
         modelValue: String,
-        width: String
+        width: String,
+        placeholder: String,
     },
     emits: ['update:modelValue'],
     methods: {
@@ -20,7 +21,7 @@
 <template>
     <div class="divInput" >
         <label style="padding-bottom: 5px;">{{ label }}</label>
-        <input class="inputStyle" :type="type" :value="modelValue" @input="handleInput" v-bind:style="[width ? {width: width} : {}]">
+        <input class="inputStyle" :type="type" :placeholder="placeholder" :value="modelValue" @input="handleInput" v-bind:style="[width ? {width: width} : {}]">
     </div>
 </template>
 

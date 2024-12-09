@@ -4,7 +4,8 @@
   export default defineComponent({
     props: {
         elements: Array,
-        title: String
+        title: String,
+        icon: String,
     },
     methods: {
     },
@@ -13,9 +14,10 @@
 <template>
   <div style="display: flex; flex-direction: column;">
     <h3>{{title}}</h3>
-    <ul style="padding-left: 10px;">
+    <ul>
       <li class="listElement" v-for="element in elements">
-        {{ element }}
+        <strong style="color: #5C5C5C;">{{ element }}</strong>
+        
       </li>
     </ul>
   </div>
@@ -26,7 +28,10 @@
     text-align: left;
     padding-top: 20px;
     padding-bottom: 20px;
-
+    margin-bottom: 8px;
+    padding-left: 20px;
+    background-color: #F3F5F8;
+    border-bottom: 1px solid #E4E4E4;
 }
 ul {
   list-style: none;

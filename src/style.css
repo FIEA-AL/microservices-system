@@ -7,3 +7,29 @@
   font-family: Georgia, serif;
   zoom: 105%;
 }
+::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+:-moz-placeholder {
+  font-style: italic;
+}
+
+::-moz-placeholder {
+  font-style: italic;
+}
+
+:-ms-input-placeholder {
+  font-style: italic;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #E4E4E4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px
+}

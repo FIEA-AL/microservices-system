@@ -56,6 +56,7 @@ export const useQRCodeApi = defineStore('QRCodeApi', {
       if (updated){
         this.qrcodeNames[index] = [name, this.qrcodeNames[index][1]]
         this.qrcodeUrls[index] = url
+        alert("QrCode atualizado");
       }
     }
   },

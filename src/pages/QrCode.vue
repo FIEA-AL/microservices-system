@@ -212,10 +212,4 @@ import InputComponent from '../components/InputComponent.vue';
     }
 
   }
-
-  @media (max-width: 640px) {
-    .colorPicker{
-      flex-direction: column;
-    }
-  }
 </style>

@@ -1,36 +1,33 @@
 import {  createRouter, createWebHistory } from 'vue-router'
 import Countdown from '../pages/Countdown.vue'
-import Home from '../pages/Home.vue'
-import QrCode from '../pages/QrCode.vue'
-import Login from '../pages/Login.vue'
-import Register from '../pages/Register.vue'
-import { useQRCodeApi } from '../stores/QRCodeApi'
-import { QrCodeService } from '../service/QrCodeService'
-import Empty from '../pages/Empty.vue'
-
+import Home from "../pages/Home.vue";
+import Login from "../pages/Login.vue";
+import Register from "../pages/Register.vue";
+import { QrCodeService } from "../service/QrCodeService";
+import Empty from "../pages/Empty.vue";
+import Frame from "../pages/QrCode/Frame.vue";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     component: Home,
-    name: 'Home'
+    name: "Home",
   },
   {
-    path: '/countdown',
+    path: "/countdown",
     component: Countdown,
-    name: 'Countdown'
-  }
-  ,
-  {
-    path: '/qrcode',
-    component: QrCode,
-    name: 'QrCode'
+    name: "Countdown",
   },
-  { path: '/empty', name: 'Empty', component: Empty },
-  { path: '/qrcode/:id', name: 'QrCodeQuery', component: Empty },
-  { path: '/login', name : 'Login', component: Login},
-  { path: '/register', name : 'Register', component: Register}
-]
+  {
+    path: "/qrcode",
+    component: Frame,
+    name: "QrCode",
+  },
+  { path: "/empty", name: "Empty", component: Empty },
+  { path: "/qrcode/:id", name: "QrCodeQuery", component: Empty },
+  { path: "/login", name: "Login", component: Login },
+  { path: "/register", name: "Register", component: Register },
+];
 
 
 export const router = createRouter({
