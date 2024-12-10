@@ -75,18 +75,39 @@ import QrcodeVue from 'qrcode.vue'
 
 <template>
 
-    <div class="pad12 leftSideWidth" style="padding-top: 36px;">
-        <div class="flex">
-            <span class="dot">
-                <v-icon @click="back()" style="cursor: pointer;"
-                        name="io-arrow-back"
-                />
-            </span>
-            <h2>{{ editFlag ? 'Editar QR Code Dinâmico' : 'Criar QR Code Dinâmico' }}</h2>
-        </div>
-        <InputComponent v-model="name"  type="text" class="pad12" label="Nome de identificação"></InputComponent>
-        <InputComponent v-model="link"  type="text" class="pad12" label="Link do QRCode"></InputComponent>
-        <div class="pad12 flex" style="justify-content: flex-end;"><ButtonComponent @click="saveQRCode()" :label="editFlag ? 'Editar QRCode' : 'Salvar QRCode'" ></ButtonComponent></div>
+    <div class="pad12 leftSideWidth flex spacebetween" style="padding-top: 36px; flex-direction: column">
+        <section>
+            <div class="flex">
+                <span class="dot">
+                    <v-icon @click="back()" style="cursor: pointer;"
+                            name="io-arrow-back"
+                    />
+                </span>
+                <h2>{{ editFlag ? 'Editar QR Code Dinâmico' : 'Criar QR Code Dinâmico' }}</h2>
+            </div>
+            <InputComponent v-model="name"  type="text" class="pad12" label="Nome de identificação"></InputComponent>
+            <InputComponent v-model="link"  type="text" class="pad12" label="Link do QRCode"></InputComponent>
+            <div class="pad12 flex" style="justify-content: flex-end;"><ButtonComponent @click="saveQRCode()" :label="editFlag ? 'Editar QRCode' : 'Salvar QRCode'" ></ButtonComponent></div>
+        </section>
+        <section  class="pad12">
+            <p>
+                <h3>Funcionamento:</h3><br>
+
+                <span class="fontSmall">
+                    O QR Code dinâmico armazena um link que pode ser alterado a qualquer momento. Mesmo que o destino mude,
+                    a imagem do QR Code continua o mesmo. Isso permite que você atualize as informações sem precisar criar um novo código.<br><br>
+                </span>
+
+                <br><h4>Exemplo:</h4><br>
+
+                <ol type="1" class="pad12 fontSmall" style="padding-left: 16px;" >
+                    <li>O QR Code aponta para https://al.sesi.com.br/qr/123.</li>
+                    <li>No sistema, você atualiza o destino para um novo link.</li>
+                </ol>
+                <br><span class="fontSmall">O código permanece o mesmo, mas leva o usuário ao novo endereço!</span>
+            </p>
+        </section>
+        
     </div>
     <div class="rightSide">
         <div v-if="editFlag" class="pad24 flex" style="justify-content: center;">
@@ -120,6 +141,9 @@ import QrcodeVue from 'qrcode.vue'
 </template>
 
 <style scoped>
+    .fontSmall{
+        font-size: 0.9rem;
+    }
     .colorSpan{
         width: 100px; 
         height: 40px; 
@@ -141,7 +165,7 @@ import QrcodeVue from 'qrcode.vue'
     }
     .rightSide{
         margin-top: 1.7vh;
-        height: 75vh;
+        height: 710px;
         width: 40%;
         background-color: #F3F5F8;
         border-top-left-radius: 25px;

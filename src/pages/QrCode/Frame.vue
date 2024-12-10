@@ -102,7 +102,7 @@ import editQrCode from './editQrCode.vue';
     }
     .rightSide{
         margin-top: 1.7vh;
-        height: 75vh;
+        height: 710px;
         width: 40%;
         background-color: #F3F5F8;
         border-top-left-radius: 25px;
