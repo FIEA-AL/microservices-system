@@ -29,9 +29,10 @@ import Forms from './Forms.vue';
       console.log(`QR Code at index ${index} deleted successfully.`);
     };
 
-    const showQRCode = (index : number) => {
+    const showQRCode = (name : string) => {
       QRisHidden.value = false;
       editisHidden.value = false;
+      const index = qrCodeApiInstance.qrcodeNames.findIndex((element) => element[0] === name);
       indexToEdit.value = index;
     } 
 
@@ -55,10 +56,10 @@ import Forms from './Forms.vue';
             </div>
             <div class="pad12 flex">
                 <ul class="maxWidth">
-                    <li class="listElement flex space-between" v-for="element in filteredQRCodeNamesList" :key="index">
+                    <li class="listElement flex space-between" v-for="element in filteredQRCodeNamesList">
                         <strong style="color: #5C5C5C;">{{ element }}</strong>
                         <span class="dot">
-                            <v-icon @click="showQRCode(index)" style="cursor: pointer;"
+                            <v-icon @click="showQRCode(element)" style="cursor: pointer;"
                                     name="io-arrow-forward"
                             />
                         </span>
