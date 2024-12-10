@@ -12,4 +12,6 @@ export interface QrCode {
   id: string;
   name: string;
   url: string;
+  color: string;
+  backgroundColor: string;
 }

@@ -4,13 +4,11 @@ import { useQRCodeApi } from '../../stores/QRCodeApi';
 import ListComponent from '../../components/ListComponent.vue';
 import InputComponent from '../../components/InputComponent.vue';
 import ButtonComponent from '../../components/ButtonComponent.vue';
-import QrCode from './QrCode.vue';
-import Forms from './Forms.vue';
+import editQrCode from './editQrCode.vue';
 
     const qrCodeApiInstance = useQRCodeApi();
     const name = ref('');
     const QRisHidden = ref(true);
-    const editisHidden = ref(true); 
 
 
     const qrCodeNamesList = computed(() => qrCodeApiInstance.filterOutIds);
@@ -31,13 +29,12 @@ import Forms from './Forms.vue';
 
     const showQRCode = (name : string) => {
       QRisHidden.value = false;
-      editisHidden.value = false;
       const index = qrCodeApiInstance.qrcodeNames.findIndex((element) => element[0] === name);
       indexToEdit.value = index;
     } 
 
     const newQrCode = () => {
-      editisHidden.value = false;
+      QRisHidden.value = false;
     } 
 
 
@@ -48,9 +45,9 @@ import Forms from './Forms.vue';
 </script>
 
 <template>
-    <div   class="flex">
-        <div v-if="editisHidden" class="pad12 leftSideWidth" style="padding-top: 36px;" >
-            <div style="display: flex; justify-content: space-between;"><h2>QR Code Dinâmico</h2> <ButtonComponent @click="newQrCode()" label="Novo QRCode" ></ButtonComponent></div>
+    <div v-if="QRisHidden" class="flex mobileEdit">
+        <div class="pad12 leftSideWidth" style="padding-top: 36px;" >
+            <div class="pad12 titleAndCreate"><h2>QR Code Dinâmico</h2> <ButtonComponent @click="newQrCode()" label="Novo QRCode" ></ButtonComponent></div>
             <div class="flex" >
                 <InputComponent v-model="name" type="text" placeholder="Filtro por nome" class="pad12 maxWidth"></InputComponent>
             </div>
@@ -67,17 +64,22 @@ import Forms from './Forms.vue';
                 </ul>
             </div> 
         </div>
-        <div  v-if="!editisHidden" class="pad12 leftSideWidth" style="padding-top: 36px;" >
-            <Forms :index=indexToEdit ></Forms>
-        </div>
-        <div  class="rightSide" >
-            <div v-if="!QRisHidden"><QrCode :index=indexToEdit></QrCode></div>
+        <div class="rightSide">
+
         </div>
     </div>
-
+    <div v-if="!QRisHidden" class="flex mobileEdit">
+        <editQrCode :index=indexToEdit ></editQrCode>
+    </div>
 </template>
 
-<style scoped>
+<style scoped>  
+    .titleAndCreate{
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding-top: 0px;
+    }
     ul {
         list-style: none;
         white-space: nowrap; 
@@ -119,4 +121,15 @@ import Forms from './Forms.vue';
         border-bottom: 1px solid #E4E4E4;
     }
 
+    @media (max-width: 1082px) {
+        .mobileEdit{
+            display: block;
+        }
+        .leftSideWidth{
+            width: 100%;
+        }
+        .rightSide{
+            width: 100%;
+        }
+    }
 </style>
