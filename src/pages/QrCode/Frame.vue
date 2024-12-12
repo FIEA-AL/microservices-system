@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useQRCodeApi } from '../../stores/QRCodeApi';
-import ListComponent from '../../components/ListComponent.vue';
 import InputComponent from '../../components/InputComponent.vue';
 import ButtonComponent from '../../components/ButtonComponent.vue';
-import editQrCode from './editQrCode.vue';
+import { useRouter } from 'vue-router';
 
     const qrCodeApiInstance = useQRCodeApi();
     const name = ref('');
-    const QRisHidden = ref(true);
+    const router = useRouter()
 
 
     const qrCodeNamesList = computed(() => qrCodeApiInstance.filterOutIds);
@@ -19,33 +18,29 @@ import editQrCode from './editQrCode.vue';
         )
     );
 
-    const indexToEdit = ref(-1)
 
     const deleteQRCode = async (index: number) => {
       await qrCodeApiInstance.deleteFromStates(index);
-      QRisHidden.value = true;
       console.log(`QR Code at index ${index} deleted successfully.`);
     };
 
     const showQRCode = (name : string) => {
-      QRisHidden.value = false;
       const index = qrCodeApiInstance.qrcodeNames.findIndex((element) => element[0] === name);
-      indexToEdit.value = index;
+      router.push(`/qrcode/edit/${index}`)
     } 
 
     const newQrCode = () => {
-      QRisHidden.value = false;
+        router.push('/qrcode/create');
     } 
 
 
     onMounted(() => {
       qrCodeApiInstance.getQrCodes();
-    });
-    
+    }); 
 </script>
 
 <template>
-    <div v-if="QRisHidden" class="flex mobileEdit">
+    <div class="flex mobileEdit">
         <div class="pad12 leftSideWidth" style="padding-top: 36px;" >
             <div class="pad12 titleAndCreate"><h2>QR Code Dinâmico</h2> <ButtonComponent @click="newQrCode()" label="Novo QRCode" ></ButtonComponent></div>
             <div class="flex" >
@@ -65,11 +60,7 @@ import editQrCode from './editQrCode.vue';
             </div> 
         </div>
         <div class="rightSide">
-
         </div>
-    </div>
-    <div v-if="!QRisHidden" class="flex mobileEdit">
-        <editQrCode :index=indexToEdit ></editQrCode>
     </div>
 </template>
 

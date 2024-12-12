@@ -6,6 +6,7 @@ import Register from "../pages/Register.vue";
 import { QrCodeService } from "../service/QrCodeService";
 import Empty from "../pages/Empty.vue";
 import Frame from "../pages/QrCode/Frame.vue";
+import editQrCode from "../pages/QrCode/editQrCode.vue";
 
 const routes = [
   {
@@ -23,12 +24,38 @@ const routes = [
     component: Frame,
     name: "QrCode",
   },
-  { path: "/empty", name: "Empty", component: Empty },
-  { path: "/qrcode/:id", name: "QrCodeQuery", component: Empty },
-  { path: "/login", name: "Login", component: Login },
-  { path: "/register", name: "Register", component: Register },
-];
+  {
+    path: "/qrcode/:id",
+    component: Empty,
+    name: "QrCodeQuery",
+  },
+  {
+    path: "/qrcode/create",
+    component: editQrCode,
+    name: "QrCodeCreate",
+  },
+  {
+    path: "/qrcode/edit/:index",
+    component: editQrCode,
+    name: "QrCodeEdit",
+  },
+  {
+    path: "/empty",
+    component: Empty,
+    name: "Empty",
+  },
 
+  {
+    path: "/login",
+    component: Login,
+    name: "Login",
+  },
+  {
+    path: "/register",
+    component: Register,
+    name: "Register",
+  },
+];
 
 export const router = createRouter({
   history: createWebHistory(),
