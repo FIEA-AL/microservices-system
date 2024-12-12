@@ -6,7 +6,7 @@ import Register from "../pages/Register.vue";
 import { QrCodeService } from "../service/QrCodeService";
 import Empty from "../pages/Empty.vue";
 import Frame from "../pages/QrCode/Frame.vue";
-import editQrCode from "../pages/QrCode/editQrCode.vue";
+import EditQRCode from "../pages/QrCode/EditQRCode.vue";
 
 const routes = [
   {
@@ -31,12 +31,12 @@ const routes = [
   },
   {
     path: "/qrcode/create",
-    component: editQrCode,
+    component: EditQRCode,
     name: "QrCodeCreate",
   },
   {
     path: "/qrcode/edit/:index",
-    component: editQrCode,
+    component: EditQRCode,
     name: "QrCodeEdit",
   },
   {

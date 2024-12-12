@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {  computed, onMounted, ref } from 'vue';
+import {  computed, onMounted, onUnmounted, ref } from 'vue';
 import { useQRCodeApi } from '../../stores/QRCodeApi';
 import InputComponent from '../../components/InputComponent.vue';
 import ButtonComponent from '../../components/ButtonComponent.vue';
@@ -31,7 +31,10 @@ import QrcodeVue from 'qrcode.vue'
             await qrCodeApiInstance.updateQrCode(index.value, name.value, link.value, color.value, backgroundColor.value)
         }
         else{
-            await qrCodeApiInstance.saveQrCode(name.value, link.value, color.value, backgroundColor.value);
+            const response = await qrCodeApiInstance.saveQrCode(name.value, link.value, color.value, backgroundColor.value);
+            if (response){
+                
+            }
         }
       } else {
         alert('Please enter a name and a link!');
@@ -58,13 +61,17 @@ import QrcodeVue from 'qrcode.vue'
       index.value = route.params.index ? Number(route.params.index) : -1;
       if (index.value != -1){
         editFlag.value = true;
-        qrName.value, name.value = qrCodeApiInstance.qrcodeNames[index.value][0];
-        link.value = qrCodeApiInstance.qrcodeUrls[index.value];
-        qrCodeLink.value = window.location.href.concat('/', qrCodeApiInstance.qrcodeNames[index.value][1]);
-        color.value = qrCodeApiInstance.qrcodeColors[index.value][0];
-        backgroundColor.value = qrCodeApiInstance.qrcodeColors[index.value][1];
+        qrName.value, name.value = qrCodeApiInstance.qrCodes[index.value].name;
+        link.value = qrCodeApiInstance.qrCodes[index.value].url;
+        qrCodeLink.value = window.location.href.concat('/', qrCodeApiInstance.qrCodes[index.value].id);
+        color.value = qrCodeApiInstance.qrCodes[index.value].color;
+        backgroundColor.value = qrCodeApiInstance.qrCodes[index.value].backgroundColor;
       }
     });
+
+    onUnmounted(() => {
+      qrCodeApiInstance.clearStates();
+    }); 
 </script>
 
 <template>

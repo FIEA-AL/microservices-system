@@ -4,15 +4,14 @@ import { QrCode } from '../types/Types';
 
 export const useQRCodeApi = defineStore("QRCodeApi", {
   state: () => ({
-    qrcodeNames: [] as [string, string][],
-    qrcodeUrls: [] as string[],
-    qrcodeColors: [] as [string, string][],
+    qrCodes: [] as {
+      name: string;
+      url: string;
+      color: string;
+      backgroundColor: string;
+      id: string;
+    }[],
   }),
-  getters: {
-    filterOutIds(state) {
-      return state.qrcodeNames.map(([first]) => first);
-    },
-  },
   actions: {
     async getQrCodes() {
       const data = await QrCodeService.getQRCodes();
@@ -43,23 +42,20 @@ export const useQRCodeApi = defineStore("QRCodeApi", {
     fillStates(data: QrCode[] | QrCode) {
       if (Array.isArray(data)) {
         data.forEach((element: QrCode) => {
-          this.qrcodeNames.push([element.name, element.id]);
-          this.qrcodeColors.push([element.color, element.backgroundColor]);
-          if (element.url) this.qrcodeUrls.push(element.url);
+          this.qrCodes.push(element);
         });
       } else {
-        this.qrcodeNames.push([data.name, data.id]);
-        this.qrcodeColors.push([data.color, data.backgroundColor]);
-        if (data.url) this.qrcodeUrls.push(data.url);
+        this.qrCodes.push(data);
       }
     },
     async deleteFromStates(index: number) {
       const deleted = await QrCodeService.deleteQRCodeByIndex(index);
       if (deleted) {
-        this.qrcodeNames.splice(index, 1);
-        this.qrcodeUrls.splice(index, 1);
-        this.qrcodeColors.splice(index, 1);
+        this.qrCodes.splice(index, 1);
       }
+    },
+    clearStates() {
+      this.qrCodes = [];
     },
     async updateQrCode(
       index: number,
@@ -73,12 +69,11 @@ export const useQRCodeApi = defineStore("QRCodeApi", {
         url: url,
         color: color,
         backgroundColor: backgroundColor,
+        id: this.qrCodes[index].id,
       };
       const updated = await QrCodeService.updateQRCodeByIndex(index, newQrCode);
       if (updated) {
-        this.qrcodeNames[index] = [name, this.qrcodeNames[index][1]];
-        this.qrcodeUrls[index] = url;
-        this.qrcodeColors[index] = [color, backgroundColor];
+        this.qrCodes[index] = newQrCode;
         alert("QrCode atualizado");
       }
     },

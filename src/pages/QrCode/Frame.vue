@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useQRCodeApi } from '../../stores/QRCodeApi';
 import InputComponent from '../../components/InputComponent.vue';
 import ButtonComponent from '../../components/ButtonComponent.vue';
@@ -9,15 +9,11 @@ import { useRouter } from 'vue-router';
     const name = ref('');
     const router = useRouter()
 
-
-    const qrCodeNamesList = computed(() => qrCodeApiInstance.filterOutIds);
-
     const filteredQRCodeNamesList = computed(() =>
-        qrCodeNamesList.value.filter(element =>
-            element.toLowerCase().includes(name.value.toLowerCase())
+        qrCodeApiInstance.qrCodes.filter(element =>
+            element.name.toLowerCase().includes(name.value.toLowerCase())
         )
     );
-
 
     const deleteQRCode = async (index: number) => {
       await qrCodeApiInstance.deleteFromStates(index);
@@ -25,7 +21,7 @@ import { useRouter } from 'vue-router';
     };
 
     const showQRCode = (name : string) => {
-      const index = qrCodeApiInstance.qrcodeNames.findIndex((element) => element[0] === name);
+      const index = qrCodeApiInstance.qrCodes.findIndex((element) => element.name === name);
       router.push(`/qrcode/edit/${index}`)
     } 
 
@@ -33,10 +29,9 @@ import { useRouter } from 'vue-router';
         router.push('/qrcode/create');
     } 
 
-
     onMounted(() => {
       qrCodeApiInstance.getQrCodes();
-    }); 
+    });   
 </script>
 
 <template>
@@ -49,9 +44,9 @@ import { useRouter } from 'vue-router';
             <div class="pad12 flex">
                 <ul class="maxWidth">
                     <li class="listElement flex space-between" v-for="element in filteredQRCodeNamesList">
-                        <strong style="color: #5C5C5C;">{{ element }}</strong>
+                        <strong style="color: #5C5C5C;">{{ element.name }}</strong>
                         <span class="dot">
-                            <v-icon @click="showQRCode(element)" style="cursor: pointer;"
+                            <v-icon @click="showQRCode(element.name)" style="cursor: pointer;"
                                     name="io-arrow-forward"
                             />
                         </span>
