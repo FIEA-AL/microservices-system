@@ -90,7 +90,6 @@ import QrcodeVue from 'qrcode.vue'
             <div class="pad12 flex" style="justify-content: flex-end;"><ButtonComponent @click="saveQRCode()" :label="editFlag ? 'Editar QRCode' : 'Salvar QRCode'" ></ButtonComponent></div>
         </section>
         <section  class="pad12">
-            <p>
                 <h3>Funcionamento:</h3><br>
 
                 <span class="fontSmall">
@@ -105,7 +104,6 @@ import QrcodeVue from 'qrcode.vue'
                     <li>No sistema, você atualiza o destino para um novo link.</li>
                 </ol>
                 <br><span class="fontSmall">O código permanece o mesmo, mas leva o usuário ao novo endereço!</span>
-            </p>
         </section>
         
     </div>
@@ -113,7 +111,7 @@ import QrcodeVue from 'qrcode.vue'
         <div v-if="editFlag" class="pad24 flex" style="justify-content: center;">
             <qrcode-vue  id="qrCodeCanvas" :value=qrCodeLink :background=backgroundColor :foreground=color :size=300 level="H" render-as="canvas" />
         </div>
-        <div class="pad12" >
+        <div v-if="editFlag" class="pad12" >
             <h4 class="rightSideSubtitle">Personalizar QR Code</h4>
             <hr>
             <div class="flex mobileColorPickers spacebetween">
