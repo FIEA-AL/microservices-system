@@ -20,17 +20,16 @@ import { useRouter } from 'vue-router';
       console.log(`QR Code at index ${index} deleted successfully.`);
     };
 
-    const showQRCode = (name : string) => {
-      const index = qrCodeApiInstance.qrCodes.findIndex((element) => element.name === name);
-      router.push(`/qrcode/edit/${index}`)
+    const showQRCode = (id : string) => {
+      router.push(`/qrcode/edit/${id}`)
     } 
 
     const newQrCode = () => {
         router.push('/qrcode/create');
     } 
 
-    onMounted(() => {
-      qrCodeApiInstance.getQrCodes();
+    onMounted(async () => {
+      await qrCodeApiInstance.getQrCodes();
     });   
 </script>
 
@@ -46,7 +45,7 @@ import { useRouter } from 'vue-router';
                     <li class="listElement flex space-between" v-for="element in filteredQRCodeNamesList">
                         <strong style="color: #5C5C5C;">{{ element.name }}</strong>
                         <span class="dot">
-                            <v-icon @click="showQRCode(element.name)" style="cursor: pointer;"
+                            <v-icon @click="showQRCode(element.id)" style="cursor: pointer;"
                                     name="io-arrow-forward"
                             />
                         </span>

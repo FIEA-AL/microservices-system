@@ -12,6 +12,7 @@ import QrcodeVue from 'qrcode.vue'
 
 
     const editFlag = ref(false)
+    const QRCodeAfterCreationFlag = ref(false);
 
     const index = ref(-1)
     
@@ -33,7 +34,8 @@ import QrcodeVue from 'qrcode.vue'
         else{
             const response = await qrCodeApiInstance.saveQrCode(name.value, link.value, color.value, backgroundColor.value);
             if (response){
-                
+                QRCodeAfterCreationFlag.value = true;
+                qrCodeLink.value = window.location.href.concat('/', response.id);
             }
         }
       } else {
@@ -48,7 +50,6 @@ import QrcodeVue from 'qrcode.vue'
     
     const downloadQRCode = () => {
       const canvas = document.querySelector('canvas');
-      console.log(canvas)
       if (canvas) {
         const link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
@@ -57,11 +58,15 @@ import QrcodeVue from 'qrcode.vue'
       }
     };
 
-    onMounted(() => {
-      index.value = route.params.index ? Number(route.params.index) : -1;
+    onMounted(async () => {
+      await qrCodeApiInstance.getQrCodes();
+      if (route.params.id){
+        console.log(qrCodeApiInstance.qrCodes)
+        index.value = qrCodeApiInstance.qrCodes.findIndex((element) => element.id === route.params.id);
+      }
       if (index.value != -1){
         editFlag.value = true;
-        qrName.value, name.value = qrCodeApiInstance.qrCodes[index.value].name;
+        qrName.value = name.value = qrCodeApiInstance.qrCodes[index.value].name;
         link.value = qrCodeApiInstance.qrCodes[index.value].url;
         qrCodeLink.value = window.location.href.concat('/', qrCodeApiInstance.qrCodes[index.value].id);
         color.value = qrCodeApiInstance.qrCodes[index.value].color;
@@ -109,7 +114,7 @@ import QrcodeVue from 'qrcode.vue'
             
         </div>
         <div class="rightSide">
-            <div v-if="editFlag" class="pad24 flex" style="justify-content: center;">
+            <div v-if="editFlag || QRCodeAfterCreationFlag" class="pad24 flex" style="justify-content: center;">
                 <qrcode-vue  id="qrCodeCanvas" :value=qrCodeLink :background=backgroundColor :foreground=color :size=300 level="H" render-as="canvas" />
             </div>
             <div v-if="editFlag" class="pad12" >
@@ -133,8 +138,8 @@ import QrcodeVue from 'qrcode.vue'
                         </label>
                     </div>
                 </div>
-                <div v-if="editFlag" class="pad12" style="text-align: center;"> <ButtonComponent @click="downloadQRCode()" label="Baixar QR Code" ></ButtonComponent></div>
             </div>
+            <div v-if="editFlag || QRCodeAfterCreationFlag" class="pad12" style="text-align: center;"> <ButtonComponent @click="downloadQRCode()" label="Baixar QR Code" ></ButtonComponent></div>
         </div>
     </div>
 </template>

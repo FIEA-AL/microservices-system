@@ -35,7 +35,7 @@ const routes = [
     name: "QrCodeCreate",
   },
   {
-    path: "/qrcode/edit/:index",
+    path: "/qrcode/edit/:id",
     component: EditQRCode,
     name: "QrCodeEdit",
   },

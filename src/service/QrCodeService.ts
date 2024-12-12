@@ -77,7 +77,7 @@ class QrCodeService {
       const token = localStorage.getItem("authToken");
 
       const response = await http.delete(
-        `http://localhost:3000/qrcodes/${qrCodeStore.qrcodeNames[index][1]}`,
+        `http://localhost:3000/qrcodes/${qrCodeStore.qrCodes[index].id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -112,7 +112,7 @@ class QrCodeService {
       const token = localStorage.getItem("authToken");
 
       const response = await http.put(
-        `http://localhost:3000/qrcodes/${qrCodeStore.qrcodeNames[index][1]}`,
+        `http://localhost:3000/qrcodes/${qrCodeStore.qrCodes[index].id}`,
         updatedQRCode,
         {
           headers: {
