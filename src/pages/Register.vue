@@ -21,10 +21,12 @@
 
 <template>
   <div class="pad12 flex loginMenu" style="gap: 20px; ">
+    <form>
       <div class="inputsWidth">
         <InputComponent class="pad12" v-model="email" type="text" label="Usuario"></InputComponent>
         <InputComponent class="pad12" v-model="password" type="text" label="Senha"></InputComponent>
       </div>
+    </form>
         <div class="pad12"><ButtonComponent @click = register() label="Register"></ButtonComponent></div>
   </div>
 </template>

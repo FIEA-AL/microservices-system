@@ -26,18 +26,27 @@
 
 <template>
     <div class="pad12 flex loginMenu" style="gap: 20px; ">
-      <div class="inputsWidth">
-        <InputComponent class="pad12" v-model="email" type="text" label="Usuario"></InputComponent>
-        <InputComponent class="pad12" v-model="password" type="text" label="Senha"></InputComponent>
-      </div>
-      <div class="pad12 flex" style="gap: 40px;">
-        <div><ButtonComponent @click = "login()" label="Login"></ButtonComponent></div>
-        <div><ButtonComponent @click = "goTo('/register')" label="Register"></ButtonComponent></div>
-      </div>
+      <form>
+        <div class="inputsWidth">
+          <InputComponent class="pad12" v-model="email" type="text" label="Usuario"></InputComponent>
+          <InputComponent class="pad12" v-model="password" type="text" label="Senha"></InputComponent>
+        </div>
+        <div class="pad12 flex" style="gap: 40px; align-items: center">
+          <div @click = "goTo('/register')" class="register flex" >Register</div>
+          <div><ButtonComponent @click = "login()" label="Login"></ButtonComponent></div>
+        </div>
+      </form>
     </div>
 </template>
 
 <style scoped>
+  .register{  
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+  } 
   .flex{
     display: flex;
   }
